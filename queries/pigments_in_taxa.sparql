@@ -1,0 +1,34 @@
+#title: Which pigments are found in which taxa, according to which reference?
+# special thanks goes to User:Lmichan for updating this information!
+SELECT DISTINCT ?compound ?compoundLabel ?taxon ?taxonname ?DOI 
+WITH {
+  SELECT ?compound WHERE {
+    ?compound (wdt:P31*/wdt:P279*) wd:Q161179.  # get pigments
+  }
+} AS %compounds
+WITH {
+  SELECT ?compound ?P703statement WHERE {
+    INCLUDE %compounds
+            ?compound p:P703 ?P703statement.    # check for "found in taxon" statements
+  }
+} AS %P703statement
+WITH {
+  SELECT ?compound ?taxon ?DOI WHERE {
+    INCLUDE %P703statement
+            ?P703statement ps:P703 ?taxon ;     # get the respective taxa
+            prov:wasDerivedFrom / pr:P248 [     # get the reference supporting that statement
+              wdt:P356 ?DOI                     # get the DOI for the reference
+            ] .
+  }
+} AS %taxa
+WHERE {
+  {
+    INCLUDE %taxa
+
+            ?taxon wdt:P225 ?taxonname .        # get the taxon name
+  }
+  ?compound rdfs:label ?compoundLabel .         # get compound labels
+  FILTER (LANG(?compoundLabel) = "en") .        # filter for English
+}
+ORDER BY ASC(?compoundLabel)
+LIMIT 10000

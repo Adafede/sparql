@@ -1,0 +1,16 @@
+#title: How many structure-organism pairs have been referenced by certain authors? (Here, two senior natural products chemists are compared to the late Ferdinand Bohlmann)
+#defaultView:BarChart
+SELECT ?authors_namesLabel (COUNT(DISTINCT(?compound)) AS ?count) WHERE {
+  ?compound p:P703 ?stmt.           # statement found in taxon
+    ?stmt prov:wasDerivedFrom ?ref. # get the reference
+    ?ref pr:P248 ?art.              # stated in
+  VALUES ?authors_names {
+    wd:Q56084663                    # JLW
+    wd:Q40259636                    # GFP
+    wd:Q1405133                     # A german chemist of the 20th century ... Ferdinand Bohlmann
+  }
+  ?art wdt:P50 ?authors_names.      # limit to references containing the author names
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?authors_namesLabel
+ORDER BY DESC (?count)

@@ -1,0 +1,22 @@
+#title: Which compounds labelled as terpenoid (Q426694) were found in Aspergillus (Q335130) spp., between 2010 and 2020, with related references?
+SELECT ?compound ?compound_inchi (GROUP_CONCAT(DISTINCT ?isolation_reference; SEPARATOR = "|") AS ?isolation_references) (GROUP_CONCAT(DISTINCT ?reference_title; SEPARATOR = "|") AS ?references_titles) WHERE {
+  VALUES ?taxon {
+    wd:Q335130
+  }
+  VALUES ?chemical_class {
+    wd:Q426694
+  }
+  ?organism (wdt:P171*) ?taxon.
+  ?compound wdt:P235 ?compound_id;
+    wdt:P234 ?compound_inchi;
+    ((wdt:P31|wdt:P279)/(wdt:P279*)) ?compound_class;
+    p:P703 ?statement.
+  ?statement ps:P703 ?organism;
+    (prov:wasDerivedFrom/pr:P248) ?isolation_reference.
+  ?isolation_reference wdt:P1476 ?reference_title;
+    wdt:P356 ?reference_doi;
+    wdt:P577 ?reference_date.
+  FILTER(((YEAR(?reference_date)) >= 2010 ) && ((YEAR(?reference_date)) <= 2020 ))
+  FILTER(?compound_class = ?chemical_class)
+}
+GROUP BY ?compound ?compound_inchi

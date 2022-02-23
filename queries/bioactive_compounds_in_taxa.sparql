@@ -1,0 +1,21 @@
+#title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references?
+SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINCT ?meshLabel; SEPARATOR = "|") AS ?bioactivities) ?isolation_reference ?reference_title WHERE {
+  ?organism (wdt:P171*) wd:Q26262282;
+    wdt:P225 ?organism_name.
+  ?compound wdt:P235 ?compound_id;
+    wdt:P233 ?compound_smiles;
+    p:P703 ?statement;
+    (wdt:P2868/wdt:P486) ?meshId.
+  ?mesh wdt:P486 ?meshId;
+    rdfs:label ?meshLabel.
+  FILTER(LANGMATCHES(LANG(?meshLabel), "EN"))
+  ?statement ps:P703 ?organism;
+    prov:wasDerivedFrom ?ref.
+  ?ref pr:P248 ?isolation_reference.
+  ?isolation_reference wdt:P1476 ?reference_title;
+    wdt:P356 ?reference_doi;
+    wdt:P577 ?reference_date.
+  FILTER(((YEAR(?reference_date)) >= 2014 ) && ((YEAR(?reference_date)) <= 2019 ))
+}
+GROUP BY ?organism ?organism_name ?compound ?compound_smiles ?isolation_reference ?reference_title
+LIMIT 100000

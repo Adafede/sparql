@@ -1,0 +1,28 @@
+#title: What are examples of organisms where compounds were found in an organism sharing the same parent taxon, but not the organism itself?
+SELECT DISTINCT ?compound ?compoundLabel ?taxonname_with_compound ?taxonname_without_compound ?parent_taxon WITH{ 
+  SELECT DISTINCT ?compound ?taxon_with_compound ?parent_taxon 
+  WHERE {
+    ?compound wdt:P235 ?inchikey.
+    SERVICE bd:sample { ?compound wdt:P703 ?taxon_with_compound. bd:serviceParam bd:sample.limit 1000 }   
+    ?taxon_with_compound wdt:P171 ?parent_taxon.
+  }
+} AS %taxon_with_compound 
+WITH
+{ 
+  SELECT DISTINCT ?taxon_without_compound ?parent_taxon ?compound 
+  WHERE {
+    INCLUDE %taxon_with_compound
+    ?taxon_without_compound wdt:P171 ?parent_taxon.
+    FILTER (?taxon_with_compound != ?taxon_without_compound)
+  }
+} AS %taxon2 
+WHERE {
+  INCLUDE %taxon_with_compound
+  INCLUDE %taxon2
+  FILTER NOT EXISTS {?compound wdt:P703 ?taxon_without_compound.}
+  ?taxon_with_compound wdt:P225 ?taxonname_with_compound.
+  ?taxon_without_compound wdt:P225 ?taxonname_without_compound.
+  ?compound rdfs:label ?compoundLabel.
+  FILTER(LANG(?compoundLabel) = "en").
+}
+LIMIT 10000

@@ -1,0 +1,19 @@
+#title: Which organisms are known to contain stereoisomers of Beta-Sitosterol (Q121802)?
+SELECT ?taxon_name ?compound ?InChIKey 
+WITH {
+  SELECT ?compound ?InChIKey WHERE {
+    VALUES ?target {
+      wd:Q121802
+    }
+    ?target wdt:P235 ?queryKey.
+    ?compound wdt:P235 ?InChIKey.
+    FILTER (REGEX(STR(?InChIKey), CONCAT("^", SUBSTR($queryKey,1,14), "-")))
+    FILTER (?InChIKey != ?queryKey)
+  }
+} AS %compounds
+WHERE {
+  INCLUDE %compounds
+          ?compound (wdt:P703/wdt:P225) ?taxon_name.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+LIMIT 10000

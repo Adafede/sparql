@@ -1,0 +1,23 @@
+#title: Which organisms contain indolic scaffolds? Count occurences, group and order the results by the parent taxon.
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#> # prefixes needed for structural similarity search
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
+SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
+  SERVICE idsm:wikidata {
+    VALUES ?SUBSTRUCTURE {
+      "NCCC1=CNC2=C1C=CC=C2" # indolic scaffold
+    }
+    ?compound sachem:substructureSearch _:b16.
+    _:b16 sachem:query ?SUBSTRUCTURE.
+  }
+  hint:Prior hint:runFirst "true"^^xsd:boolean.
+  ?compound p:P703 ?statement;
+    wdt:P235 ?inchikey.
+  ?statement ps:P703 ?taxon.
+  ?taxon wdt:P171 ?parent_taxon.
+  ?parent_taxon wdt:P225 ?parent_taxon_name.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+GROUP BY ?parent_taxon ?parent_taxon_name
+ORDER BY DESC (?count)
