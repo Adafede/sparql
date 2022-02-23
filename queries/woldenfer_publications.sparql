@@ -1,0 +1,47 @@
+#title:Wolfender's lab publications
+SELECT DISTINCT (MIN(?dates) AS ?date) ?title ?journal ?doi ?work (GROUP_CONCAT(DISTINCT ?authorLabel; SEPARATOR = ", ") AS ?authors)
+WITH {
+  SELECT DISTINCT ?work ?datetimes WHERE {
+    VALUES ?lab {
+      wd:Q56084663
+      wd:Q87644493
+      wd:Q43275441
+    }
+    VALUES ?year {
+      20
+    }
+    ?work wdt:P50 ?lab;
+          wdt:P577 ?datetimes. 
+          FILTER(YEAR(?datetimes) >= YEAR(NOW()) - ?year)
+  } 
+} AS %works 
+WITH {
+  SELECT DISTINCT ?work ?author_statement ?dates ?doi ?journal ?title WHERE {
+    INCLUDE %works   
+            ?work 
+            wdt:P1433 ?journal_;
+            wdt:P356 ?doi;
+            p:P50 ?author_statement.
+    BIND(xsd:date(?datetimes) AS ?dates)
+    SERVICE wikibase:label {
+      bd:serviceParam wikibase:language "en".
+      ?journal_ rdfs:label ?journal.
+      ?work rdfs:label ?title.
+    } 
+  }
+} AS %author_statements
+WHERE {    
+  SELECT DISTINCT ?authorLabel ?order ?dates ?title ?journal ?doi ?work WHERE {
+  INCLUDE %author_statements   
+    ?author_statement ps:P50 ?author;
+                      pq:P1545 ?order_.
+    BIND(xsd:integer(?order_) AS ?order)
+    SERVICE wikibase:label {
+      bd:serviceParam wikibase:language "en".
+      ?author rdfs:label ?authorLabel. 
+    } 
+  }
+  ORDER BY (?order)
+}
+GROUP BY ?title ?journal ?doi ?work
+ORDER BY DESC (?date) 
