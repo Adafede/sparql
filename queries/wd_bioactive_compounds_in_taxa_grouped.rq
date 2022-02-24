@@ -1,5 +1,5 @@
 #+ summary: Bioactive compounds in Actinobacteria
-#+ description: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references?
+#+ description: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
@@ -38,8 +38,8 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
-#title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references?
-SELECT ?organism ?organism_name ?compound ?compound_smiles ?bioactivity ?isolation_reference ?reference_title WHERE {
+#title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
+SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINCT ?meshLabel; SEPARATOR = "|") AS ?bioactivities) ?isolation_reference ?reference_title WHERE {
   ?organism (wdt:P171*) wd:Q26262282;
     wdt:P225 ?organism_name.
   ?compound wdt:P235 ?compound_id;
@@ -47,8 +47,8 @@ SELECT ?organism ?organism_name ?compound ?compound_smiles ?bioactivity ?isolati
     p:P703 ?statement;
     (wdt:P2868/wdt:P486) ?meshId.
   ?mesh wdt:P486 ?meshId;
-    rdfs:label ?bioactivity.
-  FILTER(LANGMATCHES(LANG(?bioactivity), "EN"))
+    rdfs:label ?meshLabel.
+  FILTER(LANGMATCHES(LANG(?meshLabel), "EN"))
   ?statement ps:P703 ?organism;
     prov:wasDerivedFrom ?ref.
   ?ref pr:P248 ?isolation_reference.
@@ -57,4 +57,5 @@ SELECT ?organism ?organism_name ?compound ?compound_smiles ?bioactivity ?isolati
     wdt:P577 ?reference_date.
   FILTER(((YEAR(?reference_date)) >= 2014 ) && ((YEAR(?reference_date)) <= 2019 ))
 }
+GROUP BY ?organism ?organism_name ?compound ?compound_smiles ?isolation_reference ?reference_title
 LIMIT 100000
