@@ -1,0 +1,19 @@
+#title: Which are the available referenced structure-organism pairs on Wikidata? (with P1582 and not P703 we are using)
+SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) (REPLACE(STR(?taxon), ".*Q", "Q") AS ?P703) (REPLACE(STR(?art), ".*Q", "Q") AS ?S248) WHERE {
+  VALUES ?classes {
+    wd:Q11173
+    wd:Q59199015
+    wd:Q79529
+    wd:Q17339814
+    wd:Q47154513
+  }
+  ?item wdt:P31 ?classes.
+  {
+    ?item p:P1582 ?stmt.
+    ?stmt ps:P1582 ?taxon;
+      prov:wasDerivedFrom ?ref.
+    ?ref pr:P248 ?art.
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+LIMIT 1000
