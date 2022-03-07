@@ -46,7 +46,7 @@ PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
 SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
   SERVICE idsm:wikidata {
     VALUES ?SUBSTRUCTURE {
-      "NCCC1=CNC2=C1C=CC=C2" # indolic scaffold
+      "C12=C(C=CC=C2)C=CN1" # indolic scaffold
     }
     ?compound sachem:substructureSearch _:b16.
     _:b16 sachem:query ?SUBSTRUCTURE.
