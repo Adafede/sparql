@@ -1,5 +1,5 @@
-#+ summary: Publications containing 'quassin' in title
-#+ description: Publications containing 'quassin' in title
+#+ summary: Publications containing 'quassin' (Q2079986) in title
+#+ description: Publications containing 'quassin' (Q2079986) in title
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
@@ -39,12 +39,12 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
-#title:Publications containing 'quassin' in title
+#title:Publications containing 'quassin' (Q2079986) in title
 SELECT ?article ?articleTitle WHERE {
   SERVICE wikibase:mwapi {
     bd:serviceParam wikibase:endpoint "www.wikidata.org";
                     wikibase:api "Search";
-                    mwapi:srsearch "quassin haswbstatement:P31=Q13442814 -haswbstatement:P921=Q423169";
+                    mwapi:srsearch "quassin haswbstatement:P31=Q13442814 -haswbstatement:P921=Q2079986";
                     mwapi:srlimit "max".
     ?article wikibase:apiOutputItem mwapi:title.
   }
