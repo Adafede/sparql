@@ -38,9 +38,9 @@ PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Which compounds corresponding to a given mass ± 10ppm are found in which organisms?
-SELECT DISTINCT ?compound ?smiles ?taxon ?taxon_name WHERE {
+SELECT DISTINCT ?compound ?mf ?smiles ?taxon ?taxon_name WHERE {
   VALUES ?query {
-    "422.230453"^^xsd:decimal
+    "524.1765"^^xsd:decimal
   }
   VALUES ?ppm {
     "10"^^xsd:decimal
@@ -48,8 +48,9 @@ SELECT DISTINCT ?compound ?smiles ?taxon ?taxon_name WHERE {
   ?compound wdt:P2067 ?mass.
   FILTER((?mass > (?query - ((?ppm * "0.000001"^^xsd:decimal) * ?query))) && (?mass < (?query + ((?ppm * "0.000001"^^xsd:decimal) * ?query))))
   ?compound (p:P703/ps:P703) ?taxon;
-    wdt:P233 ?smiles.
+    wdt:P233 ?smiles;
+    wdt:P274 ?mf.
   ?taxon wdt:P225 ?taxon_name.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
-LIMIT 10000
+LIMIT 1000
