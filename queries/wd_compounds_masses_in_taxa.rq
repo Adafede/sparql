@@ -53,4 +53,4 @@ SELECT DISTINCT ?compound ?mf ?smiles ?taxon ?taxon_name WHERE {
   ?taxon wdt:P225 ?taxon_name.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
-LIMIT 1000
+LIMIT 10000
