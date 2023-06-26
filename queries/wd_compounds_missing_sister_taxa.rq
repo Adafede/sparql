@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Pseudoabsence
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: What are examples of organisms where compounds were found in an organism sharing the same parent taxon, but not the organism itself?
 SELECT DISTINCT ?compound ?compoundLabel ?taxonname_with_compound ?taxonname_without_compound ?parent_taxon WITH{ 
   SELECT DISTINCT ?compound ?taxon_with_compound ?parent_taxon 

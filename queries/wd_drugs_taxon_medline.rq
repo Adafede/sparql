@@ -7,6 +7,7 @@
 #+   - Natural products
 #+   - Drugs
 #+   - Medline
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -38,6 +39,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: What are the drugs (identified in Medline) found in taxa?
 SELECT DISTINCT ?drug ?inchikey ?medlineDrugId WHERE {
   ?drug wdt:P235 ?inchikey;       

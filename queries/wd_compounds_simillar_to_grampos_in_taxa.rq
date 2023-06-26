@@ -8,6 +8,7 @@
 #+   - Structural similarity
 #+   - Gram-positive
 #+   - Infection
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -39,6 +40,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: What are the parent taxa containing the most compounds similar to compounds known to treat gram-positive infections (Q55789782)?
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>

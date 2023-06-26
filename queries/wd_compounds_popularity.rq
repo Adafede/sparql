@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Popularity
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
 SELECT DISTINCT ?np ?sitelinks
 with {

@@ -7,6 +7,7 @@
 #+   - Bioactive
 #+   - Natural products
 #+   - Actinobacteria
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -38,6 +39,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references?
 SELECT ?organism ?organism_name ?compound ?compound_smiles ?bioactivity ?isolation_reference ?reference_title WHERE {
   ?organism (wdt:P171*) wd:Q26262282;

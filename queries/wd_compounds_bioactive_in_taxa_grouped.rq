@@ -1,13 +1,13 @@
-#+ summary: Bioactive compounds in spiders (Araneae)
-#+ description: What are the biological activities of compounds found in Araneae (Q1357) or children taxa?
+#+ summary: Bioactive compounds in Actinobacteria
+#+ description: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
 #+ tags:
 #+   - Bioactive
 #+   - Natural products
-#+   - Araneae
-#+   - Spiders
+#+   - Actinobacteria
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -39,18 +39,25 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
-#title: What are the biological activities of compounds found in Araneae (Q1357) or children taxa?
-SELECT DISTINCT ?structure ?structureLabel ?structure_inchi (GROUP_CONCAT(DISTINCT ?meshLabel; SEPARATOR = "|") AS ?bioactivities) WHERE {
-  VALUES ?taxon {
-    wd:Q1357
-  }
-  ?children (wdt:P171*) ?taxon.
-  ?structure wdt:P234 ?structure_inchi;
-    (p:P703/ps:P703) ?children;
+
+#title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
+SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINCT ?meshLabel; SEPARATOR = "|") AS ?bioactivities) ?isolation_reference ?reference_title WHERE {
+  ?organism (wdt:P171*) wd:Q26262282;
+    wdt:P225 ?organism_name.
+  ?compound wdt:P235 ?compound_id;
+    wdt:P233 ?compound_smiles;
+    p:P703 ?statement;
     (wdt:P2868/wdt:P486) ?meshId.
   ?mesh wdt:P486 ?meshId;
     rdfs:label ?meshLabel.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+  FILTER(LANGMATCHES(LANG(?meshLabel), "EN"))
+  ?statement ps:P703 ?organism;
+    prov:wasDerivedFrom ?ref.
+  ?ref pr:P248 ?isolation_reference.
+  ?isolation_reference wdt:P1476 ?reference_title;
+    wdt:P356 ?reference_doi;
+    wdt:P577 ?reference_date.
+  FILTER(((YEAR(?reference_date)) >= 2014 ) && ((YEAR(?reference_date)) <= 2019 ))
 }
-GROUP BY ?structure ?structureLabel ?structure_inchi
-LIMIT 10000
+GROUP BY ?organism ?organism_name ?compound ?compound_smiles ?isolation_reference ?reference_title
+LIMIT 100000

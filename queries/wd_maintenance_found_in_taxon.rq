@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Maintenance
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Which are the available referenced structure-organism pairs on Wikidata? (with P1582 and not P703 we are using)
 SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) (REPLACE(STR(?taxon), ".*Q", "Q") AS ?P703) (REPLACE(STR(?art), ".*Q", "Q") AS ?S248) WHERE {
   VALUES ?classes {

@@ -7,6 +7,7 @@
 #+   - Natural products
 #+   - Structural similarity
 #+   - Eugenol
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -38,6 +39,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title:How many compounds are structurally similar to eugenol and eugenyl acetate? Results are grouped by the parent taxon of the organism they were found in.
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#> # prefixes needed for structural similarity search
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>

@@ -8,6 +8,7 @@
 #+   - Title
 #+   - Quassin
 #+   - Wikidata
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -39,6 +40,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title:Publications containing 'quassin' (Q2079986) in title
 SELECT ?article ?articleTitle WHERE {
   SERVICE wikibase:mwapi {

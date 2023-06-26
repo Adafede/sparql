@@ -1,12 +1,14 @@
-#+ summary: Women experts proteomics
-#+ description: Women with expertise in proteomics
+#+ summary: Women experts proteomics computational biology
+#+ description: Women with expertise in proteomics and computational biology
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
 #+ tags:
 #+   - Expertise
 #+   - Proteomics
+#+   - Computational Biology
 #+   - Women
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -38,37 +40,41 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Women with expertise in proteomics
-SELECT * WITH {
+SELECT ?scholar ?scholarLabel ?topics ?works ?awards WITH {
   SELECT DISTINCT * WHERE {
-    VALUES ?subject {
+    VALUES ?topic {
       wd:Q471857
-      wd:Q420
       wd:Q177005
-      wd:Q30612
     }
-    {?scholar ^wdt:P50/wdt:P921 ?subject.}
+    { ?scholar (^wdt:P50/wdt:P921) ?topic. }
     UNION
-    {?scholar wdt:P101 ?subject.}
+    { ?scholar wdt:P101 ?topic. }
     ?scholar wdt:P21 wd:Q6581072.
   }
-} AS %SCHOLARS WITH {
+}
+ AS %SCHOLARS WITH {
   SELECT DISTINCT * WHERE {
     INCLUDE %SCHOLARS
     ?scholar rdfs:label ?scholarLabel . FILTER(LANG(?scholarLabel) = "en")
-    ?subject rdfs:label ?subjectLabel . FILTER(LANG(?subjectLabel) = "en")
+    ?topic rdfs:label ?topicLabel . FILTER(LANG(?topicLabel) = "en")
   }
 } AS %LABELED WITH {
-  SELECT DISTINCT ?scholar ?scholarLabel (GROUP_CONCAT(DISTINCT ?subjectLabel; separator=", ") as ?subjects)
-                  (COUNT(DISTINCT ?subject) AS ?count)
+  SELECT DISTINCT ?scholar ?scholarLabel (GROUP_CONCAT(DISTINCT ?topicLabel; separator=", ") as ?topics)
                   (COUNT(DISTINCT ?output) AS ?works)
-                  (COUNT(DISTINCT ?award) AS ?awards) WHERE {
+                  (COUNT(DISTINCT ?award) AS ?awards)
+                  (COUNT(DISTINCT ?topic) AS ?count)
+WHERE {
     INCLUDE %LABELED
     OPTIONAL { ?scholar wdt:P166 ?award }
     OPTIONAL { ?scholar ^wdt:P50 ?output }
-  } GROUP BY ?scholar ?scholarLabel 
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+
+  }
+  GROUP BY ?scholar ?scholarLabel
+  HAVING (?count >= 2)
 } AS %ALL WHERE {
   INCLUDE %ALL
-  FILTER(?count >= 2)
-  FILTER CONTAINS(?subjects, "proteomics")
-} ORDER BY DESC(?works) DESC(?awards) DESC(?count)
+}
+ORDER BY DESC(?works) DESC(?awards) DESC(?count)

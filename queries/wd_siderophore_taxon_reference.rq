@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Siderophores
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Which are the available siderophores found in organisms on Wikidata? (example limited to 1000 results)
 SELECT DISTINCT ?structure ?structure_smiles ?structure_inchikey ?taxon ?taxon_name ?reference ?reference_doi WHERE {
   VALUES ?siderophores {

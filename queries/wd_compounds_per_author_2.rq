@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Author
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: Which authors isolated the most natural products (based on a sample of 10,000 compounds)? Return the top 30 authors by count.
 #defaultView:BubbleChart
 SELECT ?authorLabel ?nationalityLabel ?rgb (COUNT(DISTINCT(?compound)) AS ?count) WITH { 

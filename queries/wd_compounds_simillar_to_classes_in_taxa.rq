@@ -8,6 +8,7 @@
 #+   - Structural similarity
 #+   - Saponins
 #+   - Quillaja saponaria
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -39,6 +40,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: What are the parent taxa containing the most oleanane triterpenoids (Q108544891) similar to those reported in Quillaja saponaria (Q2382775)?
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>

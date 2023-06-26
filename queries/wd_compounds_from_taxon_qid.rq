@@ -6,6 +6,7 @@
 #+ tags:
 #+   - Natural products
 #+   - Arabidopsis thaliana
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
 PREFIX wdv: <http://www.wikidata.org/value/>
@@ -37,6 +38,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
+
 #title: What are the compounds found in Mouse-ear cress Arabidopsis thaliana (Q158695) or children taxa?
 SELECT DISTINCT ?structure ?structureLabel ?structure_inchi WHERE {
   VALUES ?taxon {
