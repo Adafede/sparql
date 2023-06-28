@@ -69,8 +69,6 @@ WHERE {
     INCLUDE %LABELED
     OPTIONAL { ?scholar wdt:P166 ?award }
     OPTIONAL { ?scholar ^wdt:P50 ?output }
-                        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-
   }
   GROUP BY ?scholar ?scholarLabel
   HAVING (?count >= 2)
