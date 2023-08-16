@@ -42,11 +42,8 @@ PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Which are the available referenced structure-organism pairs on Wikidata? (with P1582 and not P703 we are using)
 SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) (REPLACE(STR(?taxon), ".*Q", "Q") AS ?P703) (REPLACE(STR(?art), ".*Q", "Q") AS ?S248) WHERE {
   VALUES ?classes {
-    wd:Q11173
+    wd:Q113145171
     wd:Q59199015
-    wd:Q79529
-    wd:Q17339814
-    wd:Q47154513
   }
   ?item wdt:P31 ?classes.
   {

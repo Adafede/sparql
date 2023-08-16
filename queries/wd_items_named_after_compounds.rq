@@ -43,11 +43,8 @@ PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Which are the most popular natural products based on the number of items named after them?
 SELECT DISTINCT ?np ?npLabel (COUNT(DISTINCT ?item) AS ?count) WHERE {
   VALUES ?classes {
-    wd:Q11173
+    wd:Q113145171
     wd:Q59199015
-    wd:Q79529
-    wd:Q17339814
-    wd:Q47154513
   }
   ?item wdt:P138 ?np.
   ?np wdt:P31 ?classes;

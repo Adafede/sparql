@@ -49,11 +49,8 @@ with {
 WHERE {
   hint:Query hint:optimizer "None".
   VALUES ?instances {
-    wd:Q11173 # chemical compound
+    wd:Q113145171 # type of a chemical entity
     wd:Q59199015 # group of stereoisomers
-    wd:Q79529 # chemical substance
-    wd:Q17339814 # group of chemical substances
-    wd:Q47154513 # structural class of chemical compounds
   }
 
   include %values.
