@@ -1,0 +1,188 @@
+#+ summary: Chemicals statistics
+#+ description: Chemicals statistics
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Chemicals
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wds: <http://www.wikidata.org/entity/statement/>
+PREFIX wdv: <http://www.wikidata.org/value/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+PREFIX wdref: <http://www.wikidata.org/reference/>
+PREFIX psv: <http://www.wikidata.org/prop/statement/value/>
+PREFIX psn: <http://www.wikidata.org/prop/statement/value-normalized/>
+PREFIX pqv: <http://www.wikidata.org/prop/qualifier/value/>
+PREFIX pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX prn: <http://www.wikidata.org/prop/reference/value-normalized/>
+PREFIX wdno: <http://www.wikidata.org/prop/novalue/>
+PREFIX wdata: <http://www.wikidata.org/wiki/Special:EntityData/>
+
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX bds: <http://www.bigdata.com/rdf/search#>
+PREFIX gas: <http://www.bigdata.com/rdf/gas#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+
+SELECT ?count ?description WHERE {
+    {
+        BIND("Chemicals" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with fully defined stereochemistry" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P31=Q113145171" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with undefined stereochemistry" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with CAS registry number" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P231 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with canonical SMILES" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P233 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with InChI" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P234 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with InChIKey" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P235 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with chemical formula" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P274 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with PubChem ID" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P662 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals found in taxon" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P703 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with pKa" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P1117 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with isomeric SMILES" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P2017 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with mass" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P2067 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with melting point" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P2101 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with boiling point" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P2102 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with crystal structure" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P3636|P11375 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with mass spectrum" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P4964|P6689 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    } UNION {
+        BIND("Chemicals with NMR spectrum" AS ?description)
+        SERVICE wikibase:mwapi {
+            bd:serviceParam wikibase:endpoint "www.wikidata.org"; wikibase:api "Search"; wikibase:limit "once" ;
+            mwapi:srsearch "haswbstatement:P9405 haswbstatement:P31=Q113145171|P31=Q59199015" ;
+            mwapi:srlimit "1" ; mwapi:srprop "" ; mwapi:srsort "none" ; mwapi:srnamespace "0" .
+            ?count wikibase:apiOutput '//searchinfo[1]/@totalhits'.
+        }
+    }
+}
+ORDER BY DESC(xsd:integer(?count))
