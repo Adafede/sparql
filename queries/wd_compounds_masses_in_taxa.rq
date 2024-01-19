@@ -39,20 +39,23 @@ PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 
-#title: Which compounds corresponding to a given mass ± 10ppm are found in which organisms?
-SELECT DISTINCT ?compound ?mf ?smiles ?taxon ?taxon_name WHERE {
-  VALUES ?query {
-    "524.1765"^^xsd:decimal
+#title: Which compounds corresponding to a given mass ± 10ppm are found in which organism(s)?
+SELECT DISTINCT ?compound ?mf ?inchi (GROUP_CONCAT(?taxon_name; SEPARATOR = ", ") AS ?organism) WITH {
+  SELECT ?compound WHERE {
+    VALUES ?query {
+      "524.1765"^^xsd:decimal
+    }
+    VALUES ?ppm {
+      "10"^^xsd:decimal
+    }
+    ?compound wdt:P2067 ?mass.
+    FILTER((?mass > (?query - ((?ppm * "0.000001"^^xsd:decimal) * ?query))) && (?mass < (?query + ((?ppm * "0.000001"^^xsd:decimal) * ?query))))
   }
-  VALUES ?ppm {
-    "10"^^xsd:decimal
-  }
-  ?compound wdt:P2067 ?mass.
-  FILTER((?mass > (?query - ((?ppm * "0.000001"^^xsd:decimal) * ?query))) && (?mass < (?query + ((?ppm * "0.000001"^^xsd:decimal) * ?query))))
-  ?compound (p:P703/ps:P703) ?taxon;
-    wdt:P233 ?smiles;
+} AS %compounds WHERE {
+  INCLUDE %compounds
+  ?compound (wdt:P703/wdt:P225) ?taxon_name;
+    wdt:P234 ?inchi;
     wdt:P274 ?mf.
-  ?taxon wdt:P225 ?taxon_name.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
+GROUP BY ?compound ?mf ?inchi
 LIMIT 10000
