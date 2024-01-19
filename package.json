@@ -1,0 +1,24 @@
+{
+  "name": "sparql_portfolio",
+  "version": "1.0.0",
+  "description": "Some Wikidata SPARQL queries I've used in the past that, though surprisingly useful, were not that simple to build!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvfe/sparql_portfolio.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jvfe/sparql_portfolio/issues"
+  },
+  "homepage": "https://github.com/jvfe/sparql_portfolio#readme",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "ejs": "^3.1.6"
+  },
+  "devDependencies": {}
+}

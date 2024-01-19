@@ -1,0 +1,47 @@
+<%- include('head.ejs') -%>
+
+    <body>
+        <nav class="navbar has-background-link-dark" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-5 has-text-light" href="./">
+                    <%= title %>
+                </a>
+            </div>
+        </nav>
+        <div class="container is-centered">
+            <section class="py-2 px-3 m-4">
+                <div class="container is-max-desktop content has-text-centered">
+                    <h1>
+                        <%= title %>
+                    </h1>
+                    <p class="py-2">
+                        <%= description %>
+                    </p>
+                </div>
+            </section>
+            <section>
+                <div class="table-container is-max-desktop place-center">
+                    <table class="table is-hoverable">
+                        <tbody>
+                            <% queryFiles.forEach(function(queryFile){ %>
+                                <tr>
+                                    <td>
+                                        <a href="./queries/<%= queryFile.filename %>.html">
+                                            <%= queryFile.filename %>.rq
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <%= queryFile.title %>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </body>
+
+    </html>

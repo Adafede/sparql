@@ -1,0 +1,28 @@
+<%- include('head.ejs') -%>
+
+    <body>
+        <nav class="navbar has-background-link-dark" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-5 has-text-light" href="../">
+                    <%= main_title %>
+                </a>
+            </div>
+        </nav>
+        <section class="py-2 px-3 m-4">
+            <div class="container is-max-desktop content">
+                <h1>
+                    <%= title %>
+                </h1>
+                <main class="columns py-2">
+                    <div class="column is-full">
+                        <iframe style="width: 100%; height: 50vh; border: none;"
+                            src="https://query.wikidata.org/embed.html#<%= encodedQuery %>" referrerpolicy="origin"
+                            sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+                        <pre><%= query %></pre>
+                    </div>
+                </main>
+            </div>
+        </section>
+    </body>
+
+    </html>

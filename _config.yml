@@ -1,0 +1,6 @@
+title: adafede's SPARQL queries
+description: Some of my useful SPARQL queries
+queries_directory: ./queries/
+query_template: ./templates/query.ejs
+index_template: ./templates/index.ejs
+output_directory: ./docs
