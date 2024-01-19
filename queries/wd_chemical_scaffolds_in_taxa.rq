@@ -42,8 +42,6 @@ PREFIX hint: <http://www.bigdata.com/queryHints#>
 
 #title: Which organisms contain indolic scaffolds? Count occurences, group and order the results by the parent taxon.
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#> # prefixes needed for structural similarity search
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
 SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
   SERVICE idsm:wikidata {

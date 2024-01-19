@@ -56,10 +56,9 @@ SELECT DISTINCT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?
       VALUES ?class {
         wd:Q108544891
       }
-      ?children (wdt:P171*) ?taxon_1.
       ?structure wdt:P233 ?structure_smiles;
-        (p:P703/ps:P703) ?children;
-        wdt:P31 ?structure_class.
+        wdt:P703/(wdt:P171*) ?taxon_1;
+        wdt:P279 ?structure_class.
       FILTER(?structure_class = ?class)
     }
     ?compound sachem:similarCompoundSearch _:b40.

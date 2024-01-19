@@ -1,12 +1,12 @@
-#+ summary: Bioactive compounds in Actinobacteria
-#+ description: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
+#+ summary: Bioactive compounds in Actinomycetes
+#+ description: Which compounds with known bioactivities were isolated from Actinomycetes (Q62606918), between 2014 and 2019, with related organisms and references? (grouped)
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
 #+ tags:
 #+   - Bioactive
 #+   - Natural products
-#+   - Actinobacteria
+#+   - Actinomycetes
 
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wds: <http://www.wikidata.org/entity/statement/>
@@ -40,9 +40,9 @@ PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 
-#title: Which compounds with known bioactivities were isolated from Actinobacteria (Q26262282), between 2014 and 2019, with related organisms and references? (grouped)
+#title: Which compounds with known bioactivities were isolated from Actinomycetes (Q62606918), between 2014 and 2019, with related organisms and references? (grouped)
 SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINCT ?meshLabel; SEPARATOR = "|") AS ?bioactivities) ?isolation_reference ?reference_title WHERE {
-  ?organism (wdt:P171*) wd:Q26262282;
+  ?organism (wdt:P171*) wd:Q62606918;
     wdt:P225 ?organism_name.
   ?compound wdt:P235 ?compound_id;
     wdt:P233 ?compound_smiles;
