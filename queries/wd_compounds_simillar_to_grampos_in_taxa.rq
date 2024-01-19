@@ -58,17 +58,15 @@ SELECT DISTINCT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?
       UNION
       { ?infection wdt:P2176 ?structure. }
       ?structure wdt:P233 ?structure_smiles;
-        (p:P703/ps:P703) ?taxon.
+                 wdt:P703 ?taxon.
     }
-    ?compound sachem:similarCompoundSearch _:b40.
-    _:b40 sachem:query ?structure_smiles;
-      sachem:cutoff ?CUTOFF.
-  }
-  hint:Prior hint:runFirst "true"^^xsd:boolean.
-  ?compound wdt:P703 ?taxon.
-  ?taxon wdt:P171 ?parent_taxon.
-  OPTIONAL { ?parent_taxon wdt:P225 ?parent_taxon_name. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    ?compound sachem:similarCompoundSearch [
+      sachem:query ?structure_smiles;
+      sachem:cutoff ?CUTOFF
+    ].
+  } hint:Prior hint:runFirst "true"^^xsd:boolean.
+  ?compound wdt:P703/wdt:P171 ?parent_taxon.
+  ?parent_taxon wdt:P225 ?parent_taxon_name.
 }
 GROUP BY ?parent_taxon ?parent_taxon_name
 ORDER BY DESC (?count)

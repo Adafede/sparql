@@ -40,7 +40,7 @@ PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 
-#title: Which organisms contain indolic scaffolds? Count occurences, group and order the results by the parent taxon.
+#title: Which organisms contain at least 100 indolic scaffolds? Results ordered by parent taxon.
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#> # prefixes needed for structural similarity search
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
 SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
@@ -48,16 +48,14 @@ SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WH
     VALUES ?SUBSTRUCTURE {
       "C12=C(C=CC=C2)C=CN1" # indolic scaffold
     }
-    ?compound sachem:substructureSearch _:b16.
-    _:b16 sachem:query ?SUBSTRUCTURE.
-  }
-  hint:Prior hint:runFirst "true"^^xsd:boolean.
-  ?compound p:P703 ?statement;
-    wdt:P235 ?inchikey.
-  ?statement ps:P703 ?taxon.
-  ?taxon wdt:P171 ?parent_taxon.
+    ?compound sachem:substructureSearch [
+      sachem:query ?SUBSTRUCTURE
+    ].
+  } hint:Prior hint:runFirst "true"^^xsd:boolean.
+  ?compound p:P703 ?statement.
+  ?statement ps:P703/wdt:P171 ?parent_taxon.
   ?parent_taxon wdt:P225 ?parent_taxon_name.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 GROUP BY ?parent_taxon ?parent_taxon_name
+HAVING (?count > 100)
 ORDER BY DESC (?count)

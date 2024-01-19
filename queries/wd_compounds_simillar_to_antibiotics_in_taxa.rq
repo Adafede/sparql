@@ -55,15 +55,13 @@ SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WH
       ?antibiotic ((wdt:P279*)/wdt:P2868/wdt:P486) ?MESH;
         wdt:P233 ?smiles.
     }
-    ?compound sachem:similarCompoundSearch _:b40.
-    _:b40 sachem:query ?smiles;
-      sachem:cutoff ?CUTOFF.
-  }
-  hint:Prior hint:runFirst "true"^^xsd:boolean.
-  ?compound wdt:P703 ?taxon.
-  ?taxon wdt:P171 ?parent_taxon.
-  OPTIONAL { ?parent_taxon wdt:P225 ?parent_taxon_name. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    ?compound sachem:similarCompoundSearch[
+      sachem:query ?smiles;
+      sachem:cutoff ?CUTOFF
+    ].
+  } hint:Prior hint:runFirst "true"^^xsd:boolean.
+  ?compound wdt:P703/wdt:P171 ?parent_taxon.
+  ?parent_taxon wdt:P225 ?parent_taxon_name.
 }
 GROUP BY ?parent_taxon ?parent_taxon_name
 ORDER BY DESC (?count)

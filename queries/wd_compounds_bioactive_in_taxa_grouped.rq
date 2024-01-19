@@ -55,9 +55,8 @@ SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINC
     prov:wasDerivedFrom ?ref.
   ?ref pr:P248 ?isolation_reference.
   ?isolation_reference wdt:P1476 ?reference_title;
-    wdt:P356 ?reference_doi;
     wdt:P577 ?reference_date.
   FILTER(((YEAR(?reference_date)) >= 2014 ) && ((YEAR(?reference_date)) <= 2019 ))
 }
 GROUP BY ?organism ?organism_name ?compound ?compound_smiles ?isolation_reference ?reference_title
-LIMIT 100000
+LIMIT 10000

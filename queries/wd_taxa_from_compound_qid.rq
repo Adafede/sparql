@@ -44,8 +44,7 @@ SELECT DISTINCT ?taxon ?taxon_name WHERE {
   VALUES ?compound {
     wd:Q121802                       # You can remove the Qxxxxxx and hit Ctrl+space, type the first letters and it should autocomplete
   }
-  ?compound (p:P703/ps:P703) ?taxon. # Found in taxon
+  ?compound wdt:P703 ?taxon.         # Found in taxon
   ?taxon wdt:P225 ?taxon_name.       # Get scientific name of the taxon
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 LIMIT 10000

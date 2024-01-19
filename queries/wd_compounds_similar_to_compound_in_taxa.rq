@@ -45,6 +45,9 @@ PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#> # prefixes needed 
 PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
 SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
   SERVICE idsm:wikidata {
+    VALUES ?CUTOFF {
+        "0.85"^^xsd:double
+      }
     SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
       VALUES ?derivatives {
         wd:Q423357
@@ -52,15 +55,13 @@ SELECT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WH
       }
       ?derivatives wdt:P233 ?smiles.
     }
-    ?compound sachem:similarCompoundSearch _:b40.
-    _:b40 sachem:query ?smiles;
-      sachem:cutoff "0.85"^^xsd:double. # similarity cut-off
-  }
-  hint:Prior hint:runFirst "true"^^xsd:boolean.
-  ?compound wdt:P703 ?taxon.
-  ?taxon wdt:P171 ?parent_taxon.
-  OPTIONAL { ?parent_taxon wdt:P225 ?parent_taxon_name. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    ?compound sachem:similarCompoundSearch [
+      sachem:query ?smiles;
+      sachem:cutoff ?CUTOFF
+    ].
+  } hint:Prior hint:runFirst "true"^^xsd:boolean.
+  ?compound wdt:P703/wdt:P171 ?parent_taxon.
+  ?parent_taxon wdt:P225 ?parent_taxon_name.
 }
 GROUP BY ?parent_taxon ?parent_taxon_name
 ORDER BY DESC (?count)

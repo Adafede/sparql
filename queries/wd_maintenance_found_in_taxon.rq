@@ -49,9 +49,7 @@ SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) (REPLACE(STR(?taxon), 
   {
     ?item p:P1582 ?stmt.
     ?stmt ps:P1582 ?taxon;
-      prov:wasDerivedFrom ?ref.
-    ?ref pr:P248 ?art.
+      prov:wasDerivedFrom/pr:P248 ?art.
   }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
 LIMIT 1000

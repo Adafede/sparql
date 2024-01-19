@@ -1,11 +1,10 @@
-#+ summary: Named after Natural Products
-#+ description: Which are the most popular natural products based on the number of items named after them?
+#+ summary: Natural Products Popularity
+#+ description: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
 #+ tags:
 #+   - Natural products
-#+   - Names
 #+   - Popularity
 
 PREFIX wd: <http://www.wikidata.org/entity/>
@@ -40,18 +39,22 @@ PREFIX bds: <http://www.bigdata.com/rdf/search#>
 PREFIX gas: <http://www.bigdata.com/rdf/gas#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 
-#title: Which are the most popular natural products based on the number of items named after them?
-SELECT DISTINCT ?np ?npLabel (COUNT(DISTINCT ?item) AS ?count) WHERE {
-  VALUES ?classes {
-    wd:Q113145171
-    wd:Q59199015
+#title: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
+SELECT DISTINCT ?np ?sitelinks
+WITH {
+  SELECT DISTINCT ?sitelinks {
+    [] wikibase:sitelinks ?sitelinks.
   }
-  ?item wdt:P138 ?np.
-  ?np wdt:P31 ?classes;
-    (p:P703/ps:P703) ?t;
-    wdt:P2067 ?mass.
-  FILTER(?mass > 100 )
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+} AS %VALUES
+WHERE {
+  hint:Query hint:optimizer "None".
+  include %VALUES.
+  FILTER (?sitelinks > 90).
+  ?np wikibase:sitelinks ?sitelinks ;
+      p:P703 [] ;
+      wdt:P2067 ?mass ;
+      wdt:P274 ?formula .
+  FILTER (?mass > 100)         # Removes compounds such as water, ethanol, etc.
+  FILTER(STRLEN(?formula) > 2) # Removes pure substances
 }
-GROUP BY ?np ?npLabel
-ORDER BY DESC (?count)
+ORDER BY DESC (?sitelinks)

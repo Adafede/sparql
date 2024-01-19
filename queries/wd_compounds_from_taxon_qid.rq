@@ -46,7 +46,7 @@ SELECT DISTINCT ?structure ?structureLabel ?structure_inchi WHERE {
   }
   ?children (wdt:P171*) ?taxon.          # Include children taxa
   ?structure wdt:P234 ?structure_inchi;  # Get the InChI
-    (p:P703/ps:P703) ?children.          # Found in given taxon/taxa
+    wdt:P703 ?children.                  # Found in given taxon/taxa
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 LIMIT 10000
