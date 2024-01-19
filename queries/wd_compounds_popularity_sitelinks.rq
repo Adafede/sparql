@@ -1,4 +1,4 @@
-#+ summary: Natural Products Popularity
+#+ summary: Natural Products Popularity by sitelinks
 #+ description: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100

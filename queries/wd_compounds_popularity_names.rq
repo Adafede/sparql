@@ -1,4 +1,4 @@
-#+ summary: Named after Natural Products
+#+ summary: Natural Products Popularity by names
 #+ description: Which are the most popular natural products based on the number of items named after them?
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
