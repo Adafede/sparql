@@ -1,4 +1,4 @@
-#+ summary: Natura products treating Gram-positive infections
+#+ summary: Natural products treating Gram-positive infections
 #+ description: What are the compounds found in taxon known to treat gram-positive infections (Q55789782)?
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
